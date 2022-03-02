@@ -13,11 +13,12 @@ const logo = "https://www.chinauniversityjobs.com/wp-content/uploads/2021/01/l%E
 // Custom Components
 const LanguageMenu = () => {
   const {language, setLanguage} = useContext(ThemeContext)
+  console.log(language)
   return (
     <div className="languageMenu languageOpen">
       <ul className="languageList">
-        <li className={'languageItem' + (language === "CHI" ? " activeLanguageItem" : "")} onClick={() => setLanguage('CHI')}>中文</li>
-        <li className={'languageItem' + (language === "ENG" ? " activeLanguageItem" : "")} onClick={() => setLanguage('ENG')}>English</li>
+        <li className={'languageItem' + (language === "ch" ? " activeLanguageItem" : "")} onClick={() => setLanguage('ch')}>中文</li>
+        <li className={'languageItem' + (language === "en" ? " activeLanguageItem" : "")} onClick={() => setLanguage('en')}>English</li>
       </ul>
     </div>
   )
@@ -26,8 +27,8 @@ const LanguageMenu = () => {
 const Topbar = () => {
   // State variables
   const { tempUser, setTempUser} = useContext(AuthContext)
-  // const {language, setLanguage, setIsDarkmode} = useContext(ThemeContext)
-
+  const {language} = useContext(ThemeContext)
+  
   return (
     <div className="topbar">
       <div className="topbarLeft">
@@ -38,7 +39,7 @@ const Topbar = () => {
           {tempUser && (
             <Link to='/user/studentInfo' className="link" >
               <button className="topbarSingleButton userButton">
-                User:  <b>{tempUser}</b>
+                {language == "en" ? "User:  " : "用户:  "}<b>{tempUser}</b>
               </button>
             </Link>
           )}

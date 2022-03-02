@@ -1,11 +1,12 @@
 import React, {useContext} from 'react'
 import {ThemeContext} from '../../contexts/ThemeContext'
 import {NavLink} from 'react-router-dom'
-import * as AiIcons from "react-icons/ai";
+import * as AiIcons from "react-icons/ai"
 
 const DropdownItem = ({item}) => {
   // State variables
   const {favoriteNavs, setFavoriteNavs} = useContext(ThemeContext)
+  const {language} = useContext(ThemeContext)
 
   // Functions
   const addToFavorite = () => {
@@ -28,7 +29,7 @@ const DropdownItem = ({item}) => {
       )}
       <NavLink to={item.path} className={({isActive}) => "link dropdownItemWrapper" + (isActive ? " activeItem" : "")}>
         <span className="itemTitle">
-          {item.title}
+          {language == "en" ? item.title : item.chi_title}
         </span>
       </NavLink>
     </div>

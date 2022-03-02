@@ -20,6 +20,7 @@ const Sidebar = () => {
           <NavLink exact="true" to='/'  className={({isActive}) => "link" + (isActive ? " activeItem" : "")} >
             <SidebarItem item={{
               title: "Overview",
+              chi_title: "首页",
               icon: <AiIcons.AiOutlineHome />,
             }}/>
           </NavLink>

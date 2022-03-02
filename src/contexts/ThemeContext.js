@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 export const ThemeContext = React.createContext()
 
@@ -14,9 +14,16 @@ const ThemeContextProvider = ({ children }) => {
   ]
 
   // State variables
-  const [language, setLanguage] = useState("ENG")
+  const [language, setLanguage] = useState(
+    JSON.parse(localStorage.getItem("language")) || "en"
+  )
   const [isDarkmode, setIsDarkmode] = useState(false)
   const [favoriteNavs, setFavoriteNavs] = useState(defaultFavNav)
+
+  // Effects
+  useEffect(() => {
+    localStorage.setItem("language", JSON.stringify(language))
+  }, [language])
 
   // Context values
   const contextValue = {

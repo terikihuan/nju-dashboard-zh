@@ -2,11 +2,12 @@ import React, {useContext} from 'react'
 import './overviewTable.css'
 import {UserContext} from '../../contexts/UserContext'
 import FinishedCourses from '../../data/courseData/FinishedCourses.json'
-
+import {ThemeContext} from '../../contexts/ThemeContext'
 
 const OverviewTable = ({headers, data, fields, id}) => {
   // State Variables
   const {userCourses} = useContext(UserContext)
+  const {language} = useContext(ThemeContext)
 
   return (
     <table className="overviewTable" id={id}>
@@ -27,11 +28,11 @@ const OverviewTable = ({headers, data, fields, id}) => {
                 const hasTaken = FinishedCourses.filter(course => course.code === item.code).length
                 const isTaking = userCourses.filter(course => course.code === item.code).length  
                 if (hasTaken) {
-                  return <td className="overviewTableCell" key={index}>Yes</td>
+                  return <td className="overviewTableCell" key={index}>{language == "en" ? "Yes" : "是"}</td>
                 } else if (isTaking) {
-                  return <td className="overviewTableCell" key={index}>Enrolled</td>
+                  return <td className="overviewTableCell" key={index}>{language == "en" ? "Enrolled" : "在修"}</td>
                 } else {
-                  return <td className="overviewTableCell" key={index}>No</td>
+                  return <td className="overviewTableCell" key={index}>{language == "en" ? "No" : "否"}</td>
                 }
               } else {
                 return <td className="overviewTableCell" key={index}>{item[field]}</td>

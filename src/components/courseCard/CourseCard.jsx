@@ -1,15 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { prominent } from 'color.js'
 import './courseCard.css'
 import rgbToHex from '../../helpers/rgbToHex'
 import LightenDarkenColor from '../../helpers/lightenDarkenColor'
+import {ThemeContext} from '../../contexts/ThemeContext'
 
 
 const CourseCard = ({course}) => {
   // State variables
-  const {name, image,  credit, taughtBy} = course
+  const {name, chi_name, image,  credit, taughtBy} = course
   const [style, setStyle] = useState({})
   const [isLoading, setIsLoading] = useState(true)
+  const {language} = useContext(ThemeContext)
 
   // Functions
   const getBackgroundColor = async (url) => {
@@ -45,10 +47,10 @@ const CourseCard = ({course}) => {
           <div className="courseThumbnail" style={{ backgroundImage: `url(${image})`}} ></div>
         </div>
         <div className="courseCardBody">
-          <h4 className="courseTitle">{name}</h4>
+          <h4 className="courseTitle">{language == "en" ? name : chi_name}</h4>
           <div className="courseDetails">
-            <p className="teacher">Professor: {taughtBy}</p>
-            <p className="credits">Credits: {credit}</p>
+            <p className="teacher">{`${language == 'en' ? "Professor: " : "教师: "} ${taughtBy}`}</p>
+            <p className="credits">{language == 'en' ? "Credits: " : "学分: "} {credit}</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, {useMemo, useContext, useState} from 'react'
 import './courseWithdrawal.css'
 import {UserContext} from '../../../contexts/UserContext'
+import { ThemeContext } from '../../../contexts/ThemeContext'
 
 // Components
 import FullPanel from '../../../components/fullPanel/FullPanel'
@@ -13,6 +14,7 @@ const CourseWithdrawalPage = () => {
   const {userCourses, setUserCourses} = useContext(UserContext)
   const [courseInfo, setCourseInfo] = useState({})
   const [showModal, setShowModal] = useState(false)
+  const {language} = useContext(ThemeContext)
 
   // React Table variables
   const data = useMemo(() => [...userCourses], [userCourses])
@@ -45,15 +47,45 @@ const CourseWithdrawalPage = () => {
       
     },
   ], [])
+  const chi_columns = useMemo(() => [ 
+    {
+      Header: "课程码",
+      accessor: "code",
+      className: "tableHeader codeCol",
+    },
+    {
+      Header: "课程名",
+      accessor: "chi_name",
+    },
+    {
+      Header: "教师",
+      accessor: "taughtBy",
+      className: "tableHeader teacherCol",
+    },
+    {
+      Header: "学院",
+      accessor: "department_chi",
+    },
+    {
+      Header: "课程类别",
+      accessor: "category_chi",
+    },
+    {
+      Header: "学分",
+      accessor: "credit",
+      
+    },
+  ], [])
+  let withdrawHeader = language == "en" ? "Withdraw" : "退选"
   const tableHooks = (hooks) => {
     hooks.visibleColumns.push((columns) => [
       ...columns,
       {
         id: "withdraw",
-        Header: "Withdraw", 
+        Header: withdrawHeader, 
         Cell: ({row}) => (
           <button className="tableBtn" onClick={() => handleClick(row.original)} >
-            Withdraw
+            {language == "en" ? "Withdraw" : "退选"}
           </button>
         )
       }
@@ -74,34 +106,34 @@ const CourseWithdrawalPage = () => {
   }
 
   // Render
-  const {name, code, taughtBy, department_eng, category, level, credit} = courseInfo
+  const {name, chi_name, code, taughtBy, department_eng, department_chi, category, category_chi, level, credit} = courseInfo
   return (
     <div className="appWrapper">
       <div className="courseWithdrawalPage" >
-        <FullPanel title="Course Withdrawal" button={ToAllCoursesBtn} >
-          <WithdrawCoursesTable columns={columns} data={data} tableHooks={tableHooks} />
+        <FullPanel title={language == "en" ? "Course Withdrawal" : "课程退选"} button={ToAllCoursesBtn} >
+          <WithdrawCoursesTable columns={language == "en" ? columns : chi_columns} data={data} tableHooks={tableHooks} />
         </FullPanel>
         {showModal && (
           <Modal setShowModal={setShowModal} >
             <div className="courseInfoTitle">
-              <h3>Course Informations</h3>
+              <h3>{language == "en" ? "Course Informations" : "课程信息"}</h3>
             </div>
             <div className="courseInfoGroup">
               <div className="groupLeft">
-                <p>Course name: {name}</p>
-                <p>Course code: {code}</p>
-                <p>Professor: {taughtBy}</p>
-                <p>Department: {department_eng}</p>
+                <p>{language == "en" ? "Course name: " : "课程名: "}{language == "en" ? name : chi_name}</p>
+                <p>{language == "en" ? "Course code: " : "课程码: "}{code}</p>
+                <p>{language == "en" ? "Professor: " : "教师: "}{taughtBy}</p>
+                <p>{language == "en" ? "Department: " : "学院: "}{language == "en" ? department_eng : department_chi}</p>
               </div>
               <div className="groupRight">
-                <p>Category: {category}</p>
-                <p>Course level: {level}</p>
-                <p>Credits: {credit}</p>
+                <p>{language == "en" ? "Category: " : "课程类别: "}{language == "en" ? category : category_chi}</p>
+                <p>{language == "en" ? "Course level: " : "年级: "}{level}</p>
+                <p>{language == "en" ? "Credits: " : "学分: "}{credit}</p>
               </div>
             </div>
             <div className="confirmGroup">
-              <span>Please confirm course withdrawal </span>
-              <button className="confirmButton"onClick={() => handleWithdraw(courseInfo)} >Confirm</button>
+              <span>{language == "en" ? "Please confirm course withdrawal " :"请确认退课 "}</span>
+              <button className="confirmButton"onClick={() => handleWithdraw(courseInfo)} >{language == "en" ? "Confirm" : "确认"}</button>
             </div>
 
           </Modal>

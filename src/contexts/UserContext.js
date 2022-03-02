@@ -12,9 +12,11 @@ const UserContextProvider = ({ children }) => {
   const defaultUser = {
     name: tempUser,
     major: "Business Chinese",
+    chi_major: "汉语言",
     image:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/1200px-Macaca_nigra_self-portrait_large.jpg",
     department: "International Institute",
+    chi_department: "海外教育学院",
     schoolYear: "2020 - 2024",
   }
 

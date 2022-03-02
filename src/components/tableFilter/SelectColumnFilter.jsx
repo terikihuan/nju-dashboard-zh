@@ -1,6 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useContext } from 'react'
+import { ThemeContext } from '../../contexts/ThemeContext'
 
 const SelectColumnFilter = ({column: { filterValue, setFilter, preFilteredRows, id }}) => {
+  // State variables
+  const {language} = useContext(ThemeContext)
+
   // Calculate filter options
   const options = useMemo(() => {
     const newOptions = new Set()
@@ -16,7 +20,7 @@ const SelectColumnFilter = ({column: { filterValue, setFilter, preFilteredRows, 
       value={filterValue}
       onChange={(e) => setFilter(e.target.value || undefined)}
     >
-      <option value="">All</option>
+      <option value="">{language == "en" ? "All" : "所有"}</option>
       {options.map((option, i) => (
         <option key={i} value={option} >{option}</option>
       ))}

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useAsyncDebounce } from "react-table";
 import './tableFilter.css'
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const GlobalFilter = ({
   preGlobalFilteredRows,
@@ -10,6 +11,7 @@ const GlobalFilter = ({
   // State variables
   const count = preGlobalFilteredRows.length
   const [value, setValue] = useState(globalFilter)
+  const {language} = useContext(ThemeContext)
 
   // Functions
   const onChange = useAsyncDebounce((value) => {
@@ -27,7 +29,7 @@ const GlobalFilter = ({
           setValue(e.target.value)
           onChange(e.target.value)
         }}
-        placeholder={`Search ${count} records...`}
+        placeholder={language == "en" ? `Search ${count} records...` : `搜索${count}个结果...`}
       />
     </div>
   )
